@@ -82,6 +82,11 @@ header{
   margin: 15px;
 }
 
+.headerRight{
+  display: flex;
+  margin-left: auto;
+}
+
 .headerText{
   margin: 15px;
 }
@@ -91,4 +96,61 @@ header{
   width: 96%;
   border-radius: 10px;
   background-color: #b3b3b3;
+}
+
+.column{
+  height: 68vh;
+  display: flex;
+  justify-content: space-evenly;
+}
+.names{
+  color: #ffffff;
+}
+
+.backdrop{
+  height: 12%;
+  margin-top: 15px;
+  padding-left: 5%;
+  padding-right: 5%;
+  border-radius: 10px;
+  background-color: #19304b;
+}
+
+.icon{
+  width: 50px;
+  border-radius: 100px;
+}
+
+.buttons{
+  display: flex;
+  border-top: 1px solid black;
+}
+
+.signOut{
+  background-color: #19304b;
+  color: #ffffff;
+  font-size: 25px;
+  padding-left: 3%;
+  padding-right: 3%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 10px;
+  margin: 15px;
+}
+.option{
+  margin: 10px;
+  border-radius: 100px
+}
+
+.rightButton{
+  display: flex;
+  margin-left: auto;
+}
+
+#delete{
+  background-color: #D32F2F;
+}
+
+#add{
+  background-color: #2E7D32;
 }
