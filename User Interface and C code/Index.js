@@ -2,8 +2,8 @@ const express = require("express"); //run cmd to make node work, then 'npm insta
 const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.listen(3000, () => console.log("Listening on http://localhost:3000"));//when the node is run, opens the data on a server
-
+app.listen(3000, () => console.log("Listening on http://localhost:3000/LoginPage.html"));//when the node is run, opens the data on a server
+app.use(express.static("./FrontEnd"));
 async function getData(request, response){
     receive=5//This needs to be connected to the database
     console.log(receive);

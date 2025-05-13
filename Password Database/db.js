@@ -1,9 +1,19 @@
+
+
+
+
+
+
+
+
+
+
 const sqlite3 = require('sqlite3').verbose();
 // Crypto hashes
 const crypto = require('crypto'); 
 
 
-const dbPath = "C:\\Users\\User\\Documents\\GitHub\\PasswordManager\\Password Database\\passwords.db";
+const dbPath = "C:\\Users\\willt\\OneDrive\\Documents\\GitHub\\PasswordManager\\Password Database\\passwords.db";
 
 // Connect to SQLite database
 const db = new sqlite3.Database(dbPath, (err) => {
@@ -59,8 +69,9 @@ function verifyUser(name, password) {
 
 // --- EXAMPLES ---
 // Create a user (run once)
-// createUser('alice', 'mypassword123');
+// createUser('BILLYBOBBY', 'DELTASIERRA');
 
 // Test login
-verifyUser('alice', 'mypassword123'); //
+// verifyUser('alice', 'mypassword123'); //
 // verifyUser('alice', 'wrongpassword'); //
+verifyUser('BILLYBOBBY', 'DELTASIERRA');
