@@ -20,6 +20,7 @@ document.addEventListener("mousemove", (e) => {
     }
 });
 
+
 async function GetQuestion(IDNum) {//In it's current state, the function allows a user to pass in an ID and receive all the data associated with the ID
     let Data={
         ID:IDNum//Converts the data into JSON that can communicate with the database, based on the content in passworddb
