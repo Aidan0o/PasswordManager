@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Main-Page</title>
+    <link rel="stylesheet" href="style-page.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <img
+        class="logo"
+        src="./Assets/Password-logo.png"
+        alt="Password Application Logo"
+      />
+      <h2 class="h2">App Name</h2>
+      <section class="headerRight">
+        <p class="headerText">Employee name</p>
+        <p class="headerText">Employee ID</p>
+      </section>
+    </header>
+    <main>
+      <section class="background">
+        <section class="column">
+          <section class="backdrop" >
+            <h2 class="names">App Name</h2>
+            <div id="app-name"></div>
+          </section>
+    
+          <section class="backdrop" >
+            <h2 class="names">UserName</h2>
+            <div id="username"></div>
+          </section>
+    
+          <section class="backdrop" >
+            <h2 class="names">Passwords</h2>
+            <div id="password"></div>
+          </section>
+        </section>
+        <section class="buttons">
+          <button class="signOut">Sign Out</button>
+          <section class="rightButton">
+            <button id="delete" class="option">
+              <img
+                id="delete"
+                class="icon"
+                src="/Assets/bin-svgrepo-com.svg"
+                alt="Bin Icon"
+              />
+            </button>
+            <button id="add" class="option">
+              <img
+                id="add"
+                class="icon"
+                src="/Assets/plus-svgrepo-com.svg"
+                alt="Plus Icon"
+              />
+            </button>
+          </section>
+        </section>
+      </section>
+    </main>
+  </body>
+  <script src="MainPage.js"></script>
+</html>
