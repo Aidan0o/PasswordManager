@@ -1,5 +1,16 @@
 const appWindow = document.getElementById("app-window");
 const header = document.getElementById("app-header");
+const modalView = document.getElementById("modalView");
+const showBtn =   document.getElementById("add");
+const hideBtn = document.getElementById("red");
+
+showBtn.addEventListener("click",() => {
+    modalView.style.display = 'flex';
+})
+
+hideBtn.addEventListener('click', () => {
+    modalView.style.display = 'none';
+})
 
 let offsetX = 0, offsetY = 0, isDragging = false;
 
@@ -19,6 +30,7 @@ document.addEventListener("mousemove", (e) => {
       appWindow.style.top = `${e.clientY - offsetY}px`;
     }
 });
+
 
 async function GetQuestion(IDNum) {//In it's current state, the function allows a user to pass in an ID and receive all the data associated with the ID
     let Data={
