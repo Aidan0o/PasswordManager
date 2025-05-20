@@ -24,12 +24,9 @@ async function getData(req, res) {
       return res.status(500).json({ error: "Database error" });
     }
     res.json(rows); // Send all password entries to frontend
+    console.log(rows);
   });
 }
-
-
-
-
 
 
 
@@ -107,3 +104,4 @@ async function ReceivePassword(request, response) {
 verifyUser('BILLYBOBBY', 'DELTASIER');
 app.get("/passwords", getData);//This makes the function getData read from another file and output the data into it
 app.post("/getTestData", ReceivePassword);
+
