@@ -1,3 +1,4 @@
+// Loads stored credentials for a specific user on successful login
 document.addEventListener('DOMContentLoaded', async function () {
   const appNameContainer = document.getElementById("app-name");
   const usernameContainer = document.getElementById("username");
@@ -7,6 +8,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     const response = await fetch("http://localhost:3000/passwords");
     const passwords = await response.json();
 
+    // Backend for the list of stored credentials
     passwords.forEach(entry => {
       const appName = document.createElement("p");
       appName.textContent = entry.Title || "N/A";
@@ -21,6 +23,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       passwordContainer.appendChild(password);
     });
 
+    // Prevents program crashing if an error occurs
   } catch (error) {
     console.error("Error fetching passwords:", error);
   }
