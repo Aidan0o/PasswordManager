@@ -30,8 +30,11 @@ document.addEventListener('DOMContentLoaded', async function () {
 });
 
 const modalView = document.getElementById("modalView");
+const modalView2 = document.getElementById("modalView2");
 const showBtn =   document.getElementById("add");
 const hideBtn = document.getElementById("red");
+const showDel = document.getElementById("delete");
+const hideDel = document.getElementById("red2");
 
 // Allows you to resize and move the UI window
 showBtn.addEventListener("click",() => {
@@ -41,6 +44,15 @@ showBtn.addEventListener("click",() => {
 hideBtn.addEventListener('click', () => {
     modalView.style.display = 'none';
 })
+
+showDel.addEventListener("click",() =>{
+  modalView2.style.display = 'flex';
+})
+
+hideDel.addEventListener("click",() =>{
+  modalView2.style.display = 'none';
+})
+
 
 async function GetQuestion(IDNum) { // In it's current state, the function allows a user to pass in an ID and receive all the data associated with the ID
     let Data={
