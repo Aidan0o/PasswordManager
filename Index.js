@@ -2,7 +2,7 @@ const express = require("express"); //run cmd to make node work, then 'npm insta
 const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.listen(3000, () => console.log("Listening on http://localhost:3000/MainPage.html"));//when the node is run, opens the data on a server
+app.listen(3000, () => console.log("Listening on http://localhost:3000/User-Interface-and-C-code/FrontEnd/LoginPage.html"));//when the node is run, opens the data on a server
 app.use(express.static("./FrontEnd"));
 async function getData(req, res) {
   db.all(`SELECT * FROM EncryptedData`, [], (err, rows) => {
@@ -81,7 +81,9 @@ function verifyUser(name, password) {
     }
   });
 }
-
+async function ReceivePassword(request, response) {
+  verifyUser(request[0], request[1]);//calls login with the data stored in the list that request should be
+}
 // --- EXAMPLES ---
 // Create a user (run once)
 // createUser('BILLYBOBBY', 'DELTASIERRA');
@@ -91,3 +93,4 @@ function verifyUser(name, password) {
 // verifyUser('alice', 'wrongpassword'); //
 verifyUser('BILLYBOBBY', 'DELTASIER');
 app.get("/passwords", getData);//This makes the function getData read from another file and output the data into it
+app.post("/getTestData", ReceivePassword);

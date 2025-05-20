@@ -45,3 +45,11 @@ async function GetQuestion(IDNum) {//In it's current state, the function allows 
     });
     const data = await response.json();
 }
+
+async function TestSubmit(UserID, Password) {
+    sendList=[UserID, Password];//Both of the variables are set as a single list so both of them can be passed through in one go
+    const response=await fetch("/GetTestData", {
+        method:"POST",
+        body:sendList,//This might only send JSON data in which case it would need to be changed slightly to accommodate
+    });//Once this function is working, it can receive the data back to work with it
+}
