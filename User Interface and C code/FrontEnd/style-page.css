@@ -10,6 +10,7 @@ body {
   position: relative;
 }
 
+/* Styling for the main UI window */
 #app-window {
   position: absolute;
   top: 100px;
@@ -21,6 +22,7 @@ body {
   border: 1px solid #004c5c;
 }
 
+/* Styling for the main UI's header */
 #app-header {
   background-color: #007b8a;
   color: white;
@@ -43,6 +45,7 @@ body {
   margin-top: 5%;
 }
 
+/* sizing */
 .input-field {
   display: block;
   width: 80%;
@@ -66,6 +69,8 @@ body {
   cursor: pointer;
 }
 
+/* Allows items in the header to remain in the */
+/* center of the header regardless of it's size */
 header{
   display: flex;
   align-items: center;
@@ -107,6 +112,7 @@ header{
   height: 68vh;
 }
 
+/* Styling for the credential storage table */
 .passwordStore{
   display: flex;
   justify-content: space-evenly;
@@ -210,6 +216,7 @@ header{
   justify-content: space-evenly;
 }
 
+/* Background colours for buttons */
 #green{
   background-color: #2E7D32;
 }
@@ -217,4 +224,3 @@ header{
 #red{
   background-color: #D32F2F;
 }
-

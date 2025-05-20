@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Main-Page</title>
+
+    <!-- Linking required resources -->
     <link rel="stylesheet" href="./FrontEnd/style-page.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -11,8 +13,8 @@
       href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
       rel="stylesheet"
     />
-    
   </head>
+
   <body>
     <header>
       <img
@@ -26,6 +28,8 @@
         <p class="headerText">Employee ID</p>
       </section>
     </header>
+
+    <!-- Holds a list of this specific user's password(s) -->
     <main>
       <section class="background">
         <section class="passwords">
@@ -33,22 +37,28 @@
           <section class="backdrop">
             <h2 class="names">App Name</h2>
           </section>
+
           <section class="backdrop">
             <h2 class="names">UserName</h2>
           </section>
+
           <section class="backdrop">
             <h2 class="names">Passwords</h2>
             <div id="PSRD" class="password-list"></div>
           </section>
         </section>
+
         <section class="passwordStore">
             <p>placeholder</p>
             <p>placeholder</p>
             <p>placeholder</p>
           </section>
         </section>
+
         <section class="buttons">
+          <!-- Allows the user to sign out -->
           <button class="signOut">Sign Out</button>
+          <!-- Allows the user to delete a password -->
           <section class="rightButton">
             <button id="delete" class="option">
               <img
@@ -82,7 +92,8 @@
         </section>
       </section>
     </main>
-    
   </body>
+
+  <!-- Denotes the .js file to source from -->
   <script src="./FrontEnd/PasswordJava.js"></script>
 </html>
