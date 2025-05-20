@@ -10,6 +10,14 @@ body {
   position: relative;
 }
 
+.heads{
+  display: flex;
+  justify-content: space-between;
+}
+#x{
+  height: 30px;
+}
+
 /* Styling for the main UI window */
 #app-window {
   position: absolute;
