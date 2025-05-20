@@ -1,12 +1,22 @@
 const express = require('express');
 const path = require('path');
-const app = express();
-app.use(express.static(path.join(__dirname)));
 
+const app = express();
+
+// Serve static files from the Frontend folder (outside of /Backend)
+app.use(express.static(path.join(__dirname, '..', 'Frontend')));
+
+// Optional: Serve MainPage.html at root
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'Frontend', 'MainPage.html'));
+});
+
+// Start the server
 app.listen(3000, () => {
-  console.log("Listening on http://localhost:3000/MainPage.html");
-});//when the node is run, opens the data on a server
-app.use(express.static("./FrontEnd"));
+    console.log('Server running at http://localhost:3000/');
+});
+
+
 async function getData(req, res) {
   db.all(`SELECT * FROM EncryptedData`, [], (err, rows) => {
     if (err) {
@@ -30,7 +40,7 @@ const sqlite3 = require('sqlite3').verbose();
 // Crypto hashes
 const crypto = require('crypto'); 
 
-const dbPath = "C:\\Users\\willt\\OneDrive\\Documents\\GitHub\\PasswordManager\\User Interface and C code\\passwords.db";
+const dbPath = "C:\\Users\\willt\\OneDrive\\Documents\\GitHub\\PasswordManager\\Backend\\passwords.db";
 // const dbPath = "C:\\Users\\User\\Documents\\GitHub\\PasswordManager\\User Interface and C code\\passwords.db";
 
 // Connect to SQLite database
