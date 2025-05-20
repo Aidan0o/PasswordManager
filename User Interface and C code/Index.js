@@ -1,8 +1,11 @@
-const express = require("express"); //run cmd to make node work, then 'npm install' in terminal to calll dependant node functions, when calling new functions run 'npm install FunctionName --save'
+const express = require('express');
+const path = require('path');
 const app = express();
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-app.listen(3000, () => console.log("Listening on http://localhost:3000/User-Interface-and-C-code/FrontEnd/LoginPage.html"));//when the node is run, opens the data on a server
+app.use(express.static(path.join(__dirname)));
+
+app.listen(3000, () => {
+  console.log("Listening on http://localhost:3000/MainPage.html");
+});//when the node is run, opens the data on a server
 app.use(express.static("./FrontEnd"));
 async function getData(req, res) {
   db.all(`SELECT * FROM EncryptedData`, [], (err, rows) => {
@@ -27,8 +30,8 @@ const sqlite3 = require('sqlite3').verbose();
 // Crypto hashes
 const crypto = require('crypto'); 
 
-// "C:\Users\User\Documents\GitHub\PasswordManager\User Interface and C code\passwords.db"
-const dbPath = "C:\\Users\\User\\Documents\\GitHub\\PasswordManager\\User Interface and C code\\passwords.db";
+const dbPath = "C:\\Users\\willt\\OneDrive\\Documents\\GitHub\\PasswordManager\\User Interface and C code\\passwords.db";
+// const dbPath = "C:\\Users\\User\\Documents\\GitHub\\PasswordManager\\User Interface and C code\\passwords.db";
 
 // Connect to SQLite database
 const db = new sqlite3.Database(dbPath, (err) => {

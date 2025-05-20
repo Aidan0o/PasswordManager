@@ -6,7 +6,7 @@
     <title>Main-Page</title>
 
     <!-- Linking required resources -->
-    <link rel="stylesheet" href="./FrontEnd/style-page.css" />
+    <link rel="stylesheet" href="./style-page.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -19,7 +19,7 @@
     <header>
       <img
         class="logo"
-        src="./FrontEnd/Assets/Password-logo.png"
+        src="./Assets/Password-logo.png"
         alt="Password Application Logo"
       />
       <h2 class="h2">App Name</h2>
@@ -36,15 +36,17 @@
         <section class="column">
           <section class="backdrop">
             <h2 class="names">App Name</h2>
+            <div id="app-name"></div>
           </section>
 
           <section class="backdrop">
             <h2 class="names">UserName</h2>
+            <div id="username"></div>
           </section>
 
           <section class="backdrop">
             <h2 class="names">Passwords</h2>
-            <div id="PSRD" class="password-list"></div>
+            <div id="password"></div>
           </section>
         </section>
 
@@ -64,7 +66,7 @@
               <img
                 id="delete"
                 class="icon"
-                src="./FrontEnd/Assets/bin-svgrepo-com.svg"
+                src="./Assets/bin-svgrepo-com.svg"
                 alt="Bin Icon"
               />
             </button>
@@ -72,7 +74,7 @@
               <img
                 id="add"
                 class="icon"
-                src="./FrontEnd/Assets/plus-svgrepo-com.svg"
+                src="./Assets/plus-svgrepo-com.svg"
                 alt="Plus Icon"
               />
             </button>
@@ -95,5 +97,5 @@
   </body>
 
   <!-- Denotes the .js file to source from -->
-  <script src="./FrontEnd/PasswordJava.js"></script>
+  <script src="./PasswordJava.js"></script>
 </html>
