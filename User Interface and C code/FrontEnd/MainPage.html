@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Main-Page</title>
+
+    <!-- Linking required resources -->
     <link rel="stylesheet" href="style-page.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -12,6 +14,7 @@
       rel="stylesheet"
     />
   </head>
+
   <body>
     <header>
       <img
@@ -25,6 +28,8 @@
         <p class="headerText">Employee ID</p>
       </section>
     </header>
+    
+    <!-- Holds a list of this specific user's password(s) -->
     <main>
       <section class="background">
         <section class="column">
@@ -43,8 +48,11 @@
             <div id="password"></div>
           </section>
         </section>
+
         <section class="buttons">
+          <!-- Allows the user to sign out -->
           <button class="signOut">Sign Out</button>
+          <!-- Allows the user to delete a password -->
           <section class="rightButton">
             <button id="delete" class="option">
               <img
@@ -54,6 +62,8 @@
                 alt="Bin Icon"
               />
             </button>
+
+            <!-- Allows the user to add another password -->
             <button id="add" class="option">
               <img
                 id="add"
@@ -67,5 +77,7 @@
       </section>
     </main>
   </body>
+
+  <!-- Denotes the .js file to source from -->
   <script src="MainPage.js"></script>
 </html>
