@@ -4,6 +4,7 @@ const modalView = document.getElementById("modalView");
 const showBtn =   document.getElementById("add");
 const hideBtn = document.getElementById("red");
 
+// Allows you to resize and move the UI window
 showBtn.addEventListener("click",() => {
     modalView.style.display = 'flex';
 })
@@ -32,9 +33,9 @@ document.addEventListener("mousemove", (e) => {
 });
 
 
-async function GetQuestion(IDNum) {//In it's current state, the function allows a user to pass in an ID and receive all the data associated with the ID
+async function GetQuestion(IDNum) { // In it's current state, the function allows a user to pass in an ID and receive all the data associated with the ID
     let Data={
-        ID:IDNum//Converts the data into JSON that can communicate with the database, based on the content in passworddb
+        ID:IDNum //Converts the data into JSON that can communicate with the database, based on the content in password.db
     }
     const response=await fetch("/get-data", {
         method:"POST",
