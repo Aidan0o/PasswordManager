@@ -29,6 +29,28 @@ async function getData(req, res) {
 }
 
 
+function addPasswordEntry(title, username, password) {
+  db.run(
+    `INSERT INTO EncryptedData (Title, User_ENCR, PSRD_ENCR) VALUES (?, ?, ?)`,
+    [title, username, password],
+    function (err) {
+      if (err) {
+        console.error("Failed to insert password:", err.message);
+      } else {
+        console.log(`Password for '${title}' added with ID ${this.lastID}`);
+      }
+    }
+  );
+}
+
+app.post("/add-password", express.json(), (req, res) => {
+  const { title, username, password } = req.body;
+  if (!title || !username || !password) {
+    return res.status(400).json({ error: "Missing fields" });
+  }
+  addPasswordEntry(title, username, password);
+  res.status(200).json({ success: true });
+});
 
 
 
@@ -37,8 +59,8 @@ const sqlite3 = require('sqlite3').verbose();
 // Crypto hashes
 const crypto = require('crypto'); 
 
-const dbPath = "C:\\Users\\willt\\OneDrive\\Documents\\GitHub\\PasswordManager\\Backend\\passwords.db";
-// const dbPath = "C:\\Users\\User\\Documents\\GitHub\\PasswordManager\\User Interface and C code\\passwords.db";
+// const dbPath = "C:\\Users\\willt\\OneDrive\\Documents\\GitHub\\PasswordManager\\Backend\\passwords.db";
+const dbPath = "C:\\Users\\User\\Documents\\GitHub\\PasswordManager\\Backend\\passwords.db";
 
 // Connect to SQLite database
 const db = new sqlite3.Database(dbPath, (err) => {

@@ -36,6 +36,33 @@ const hideBtn = document.getElementById("red");
 const showDel = document.getElementById("delete");
 const hideDel = document.getElementById("red2");
 
+document.getElementById("green").addEventListener("click", async () => {
+  const inputs = document.querySelectorAll(".inputs");
+  const title = inputs[0].value;
+  const username = inputs[1].value;
+  const password = inputs[2].value;
+
+  if (!title || !username || !password) {
+    alert("Please fill in all fields.");
+    return;
+  }
+
+  const response = await fetch("http://localhost:3000/add-password", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ title, username, password })
+  });
+
+  if (response.ok) {
+    alert("Password added successfully!");
+    location.reload(); // Reload to show the new entry
+  } else {
+    alert("Failed to add password.");
+  }
+});
+
 // Allows you to resize and move the UI window
 showBtn.addEventListener("click",() => {
     modalView.style.display = 'flex';
