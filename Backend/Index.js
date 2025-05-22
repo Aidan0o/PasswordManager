@@ -43,6 +43,7 @@ function addPasswordEntry(title, username, password) {
   );
 }
 
+
 app.post("/add-password", express.json(), (req, res) => {
   const { title, username, password } = req.body;
   if (!title || !username || !password) {
@@ -51,6 +52,24 @@ app.post("/add-password", express.json(), (req, res) => {
   addPasswordEntry(title, username, password);
   res.status(200).json({ success: true });
 });
+
+
+app.delete("/delete-password/:id", (req, res) => {
+  const id = req.params.id;
+
+  db.run(`DELETE FROM EncryptedData WHERE Data_ID = ?`, [id], function (err) {
+    if (err) {
+      console.error("Failed to delete password:", err.message);
+      return res.status(500).json({ error: "Database error" });
+    }
+    if (this.changes === 0) {
+      return res.status(404).json({ error: "Password not found" });
+    }
+    console.log(`Deleted password with Data_ID: ${id}`);
+    res.status(200).json({ success: true });
+  });
+});
+
 
 
 

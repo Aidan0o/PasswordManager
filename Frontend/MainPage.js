@@ -1,41 +1,69 @@
-// Loads stored credentials for a specific user on successful login
+let selectedPasswordId = null;
+
+// Load and render stored passwords
 document.addEventListener('DOMContentLoaded', async function () {
-  const appNameContainer = document.getElementById("app-name");
-  const usernameContainer = document.getElementById("username");
-  const passwordContainer = document.getElementById("password");
+  const container = document.getElementById("password-entries");
 
   try {
     const response = await fetch("http://localhost:3000/passwords");
     const passwords = await response.json();
 
-    // Backend for the list of stored credentials
     passwords.forEach(entry => {
-      const appName = document.createElement("p");
-      appName.textContent = entry.Title || "N/A";
-      appNameContainer.appendChild(appName);
+      const row = document.createElement("div");
+      row.className = "password-row";
+      row.style.display = "flex";
+      row.style.justifyContent = "space-between";
+      row.style.alignItems = "center";
+      row.style.padding = "8px";
+      row.style.borderBottom = "1px solid #ccc";
 
-      const username = document.createElement("p");
-      username.textContent = entry.User_ENCR || "N/A";
-      usernameContainer.appendChild(username);
+      row.innerHTML = `
+        <div>${entry.Title || "N/A"}</div>
+        <div>${entry.User_ENCR || "N/A"}</div>
+        <div>${entry.PSRD_ENCR || "N/A"}</div>
+      `;
 
-      const password = document.createElement("p");
-      password.textContent = entry.PSRD_ENCR || "N/A";
-      passwordContainer.appendChild(password);
+      const deleteBtn = document.createElement("button");
+      deleteBtn.id = "delete";
+      deleteBtn.innerHTML = `<img class="icon" src="./Assets/bin-svgrepo-com.svg" alt="Bin Icon" />`;
+      deleteBtn.addEventListener("click", () => {
+        selectedPasswordId = entry.Data_ID;
+        document.getElementById("modalView2").style.display = "flex";
+      });
+
+      row.appendChild(deleteBtn);
+      container.appendChild(row);
     });
 
-    // Prevents program crashing if an error occurs
   } catch (error) {
     console.error("Error fetching passwords:", error);
   }
 });
 
+// Modal elements
 const modalView = document.getElementById("modalView");
 const modalView2 = document.getElementById("modalView2");
-const showBtn =   document.getElementById("add");
+
+const showBtn = document.getElementById("add");
 const hideBtn = document.getElementById("red");
-const showDel = document.getElementById("delete");
 const hideDel = document.getElementById("red2");
 
+// Show add modal
+showBtn.addEventListener("click", () => {
+  modalView.style.display = 'flex';
+});
+
+// Hide add modal
+hideBtn.addEventListener('click', () => {
+  modalView.style.display = 'none';
+});
+
+// Hide delete modal
+hideDel.addEventListener("click", () => {
+  modalView2.style.display = 'none';
+});
+
+// Handle adding a password
 document.getElementById("green").addEventListener("click", async () => {
   const inputs = document.querySelectorAll(".inputs");
   const title = inputs[0].value;
@@ -49,48 +77,36 @@ document.getElementById("green").addEventListener("click", async () => {
 
   const response = await fetch("http://localhost:3000/add-password", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ title, username, password })
   });
 
   if (response.ok) {
     alert("Password added successfully!");
-    location.reload(); // Reload to show the new entry
+    location.reload(); // Optional: replace this with DOM insertion for smoother UX
   } else {
     alert("Failed to add password.");
   }
 });
 
-// Allows you to resize and move the UI window
-showBtn.addEventListener("click",() => {
-    modalView.style.display = 'flex';
-})
+// Handle deleting a password
+document.getElementById("green2").addEventListener("click", async () => {
+  if (!selectedPasswordId) {
+    alert("No password selected to delete.");
+    return;
+  }
 
-hideBtn.addEventListener('click', () => {
-    modalView.style.display = 'none';
-})
+  const response = await fetch(`http://localhost:3000/delete-password/${selectedPasswordId}`, {
+    method: "DELETE"
+  });
 
-showDel.addEventListener("click",() =>{
-  modalView2.style.display = 'flex';
-})
+  if (response.ok) {
+    alert("Password deleted successfully.");
+    location.reload(); // Optional: remove row directly instead of reloading
+  } else {
+    alert("Failed to delete password.");
+  }
 
-hideDel.addEventListener("click",() =>{
-  modalView2.style.display = 'none';
-})
-
-
-async function GetQuestion(IDNum) { // In it's current state, the function allows a user to pass in an ID and receive all the data associated with the ID
-    let Data={
-        ID:IDNum //Converts the data into JSON that can communicate with the database, based on the content in password.db
-    }
-    const response=await fetch("/get-data", {
-        method:"POST",
-        body:JSON.stringify(Data),
-        headers:{
-            "Content-Type":"application/json"
-        }
-    });
-    const data = await response.json();
-}
+  selectedPasswordId = null;
+  modalView2.style.display = "none";
+});
