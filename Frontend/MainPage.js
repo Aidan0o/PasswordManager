@@ -1,3 +1,9 @@
+
+
+
+
+
+
 let selectedPasswordId = null;
 
 // Load and render stored passwords
@@ -69,12 +75,15 @@ document.getElementById("green").addEventListener("click", async () => {
   const title = inputs[0].value;
   const username = inputs[1].value;
   const password = inputs[2].value;
+  
+  
 
   if (!title || !username || !password) {
     alert("Please fill in all fields.");
     return;
   }
-
+  
+ 
   const response = await fetch("http://localhost:3000/add-password", {
     method: "POST",
     headers: { "Content-Type": "application/json" },

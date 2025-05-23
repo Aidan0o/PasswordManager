@@ -1,8 +1,13 @@
 const express = require('express');
 const path = require('path');
 
+const sqlite3 = require('sqlite3').verbose();
+// Crypto hashes
+const crypto = require('crypto'); 
+
 const app = express();
 
+const IV_LEN = 16; //set our IV length
 // Serve static files from the Frontend folder (outside of /Backend)
 app.use(express.static(path.join(__dirname, '..', 'Frontend')));
 
@@ -18,21 +23,42 @@ app.listen(3000, () => {
 
 
 async function getData(req, res) {
-  db.all(`SELECT * FROM EncryptedData`, [], (err, rows) => {
+  db.all(`SELECT * FROM EncryptedData WHERE PSRD_ENCR IS NOT NULL` , [], (err, rows) => {
     if (err) {
       console.error("Database error:", err.message);
       return res.status(500).json({ error: "Database error" });
+      
     }
-    res.json(rows); // Send all password entries to frontend
-    console.log(rows);
+    rows.forEach((obj) => { //will go through every object in rows 
+      const encPass = obj.PSRD_ENCR; 
+      const decPass = decrypt(encPass); //temp until encryption put in/test if works
+      obj.PSRD_ENCR = decPass //sets the password to the decrypted version
+    });
+    const decryptedRows = JSON.stringify(rows) //turns rows back into JSON (one long string)
+    res.json(decryptedRows); // Send all password entries to frontend
+    console.log(decryptedRows);
   });
+}
+
+function encrypt(originalText) {
+  const algorithm = 'aes-192-cbc' //algorithm used to encrypt the string
+  const passkey = 'temp until sort hashes soon' //will be the users Hash - means user can only decrypt their own passowrds (not same key for everyone)
+  const key = crypto.scryptSync(passkey, 'salt', 24); //make longer when using hash (64 or more)
+  const iv = crypto.randomBytes(IV_LEN).toString('base64').slice(0, IV_LEN);   //IV is a random seed of 16 characters - plays role in encrypt/decrypt the password
+  const cipher = crypto.createCipheriv(algorithm, key, iv); 
+  let encrypted = cipher.update(originalText, 'utf8', 'base64'); //takes the utf-8 text, encrypts it, then converts it to base64 (base64 as its shorter than having it as hex)
+  encrypted += cipher.final('base64');
+  //console.log("Original text: " , originalText );
+  //console.log("enryptedTextHex: ", encrypted); test purposes
+  return `${iv}${encrypted}`; //merges encrypted data and iv together to be stored in db - safer as only we know length of iv so hackers not sure where password starts and iv ends
 }
 
 
 function addPasswordEntry(title, username, password) {
+  const encPassword = encrypt(password);
   db.run(
     `INSERT INTO EncryptedData (Title, User_ENCR, PSRD_ENCR) VALUES (?, ?, ?)`,
-    [title, username, password],
+    [title, username, encPassword],
     function (err) {
       if (err) {
         console.error("Failed to insert password:", err.message);
@@ -74,12 +100,9 @@ app.delete("/delete-password/:id", (req, res) => {
 
 
 
-const sqlite3 = require('sqlite3').verbose();
-// Crypto hashes
-const crypto = require('crypto'); 
 
 // const dbPath = "C:\\Users\\willt\\OneDrive\\Documents\\GitHub\\PasswordManager\\Backend\\passwords.db";
-const dbPath = "C:\\Users\\User\\Documents\\GitHub\\PasswordManager\\Backend\\passwords.db";
+const dbPath = "C:\\Users\\aidan\\Documents\\GitHub\\PasswordManager\\Backend\\passwords.db";
 
 // Connect to SQLite database
 const db = new sqlite3.Database(dbPath, (err) => {
@@ -135,6 +158,28 @@ function verifyUser(name, password) {
 async function ReceivePassword(request, response) {
   verifyUser(request[0], request[1]);//calls login with the data stored in the list that request should be
 }
+
+
+
+// nonce~password
+// const [iv, encPass] = password.split("~")
+
+
+function decrypt(encryptedText) {
+  const algorithm = 'aes-192-cbc'; //algorithm used to encrypt the string
+  const passkey = 'temp until sort hashes soon'; //will be the users Hash - means user can only decrypt their own passowrds (not same key for everyone)
+  const key = crypto.scryptSync(passkey, 'salt', 24); //make longer when using hash (64 or more)
+  const iv = encryptedText.slice(0, IV_LEN); //seperate password from iv
+  const encPass = encryptedText.slice(16); 
+  const decipher = crypto.createDecipheriv(algorithm, key, iv);
+  let decrypted = decipher.update(encPass, 'base64', 'utf8');
+  decrypted += decipher.final('utf8');
+  //console.log("Original text: " , decrypted );
+  //console.log("enryptedTextHex: ", encryptedText); test purposes
+  return decrypted;
+}
+
+
 // --- EXAMPLES ---
 // Create a user (run once)
 // createUser('BILLYBOBBY', 'DELTASIERRA');
