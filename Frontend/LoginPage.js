@@ -19,3 +19,21 @@ document.addEventListener("mousemove", (e) => {
       appWindow.style.top = `${e.clientY - offsetY}px`;
     }
 });
+
+//async function checkLogin(user, pass) 
+
+document.getElementById("submission").onclick = async function(event) {
+    console.log("Success")
+    let Data={
+        uID:document.getElementById("testID"), password:document.getElementById("testPass")
+    }
+    const response=await fetch("/getTestData", {
+        method:"POST",
+        body:JSON.stringify(Data),
+        headers:{
+            "Content-Type":"application/json"
+        }
+    });
+    const data = await response.json();//this is where true or false is returned
+    console.log(data);
+};

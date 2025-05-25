@@ -13,7 +13,7 @@ app.use(express.static(path.join(__dirname, '..', 'Frontend')));
 
 // Optional: Serve MainPage.html at root
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'Frontend', 'MainPage.html'));
+    res.sendFile(path.join(__dirname, '..', 'Frontend', 'Login Page.html'));
 });
 
 // Start the server
@@ -143,6 +143,7 @@ function createUser(name, password) {
 
 //verify login function
 function verifyUser(name, password) {
+  console.log("function passed")
   db.get(`SELECT * FROM Staff WHERE Name = ?`, [name], (err, row) => {
     if (err) return console.error(err.message);
     if (!row) return console.log('User not found');
@@ -150,13 +151,20 @@ function verifyUser(name, password) {
     const hash = hashPassword(password, row.SALT);
     if (hash === row.PSRD_HASH) {
       console.log('Password is correct');
+      return true;
     } else {
       console.log('Invalid password');
     }
   });
+  return false;
 }
 async function ReceivePassword(request, response) {
-  verifyUser(request[0], request[1]);//calls login with the data stored in the list that request should be
+  console.log("still success")
+  let x=verifyUser(request.uID, request.password);//calls login with the data stored in the list that request should be
+  console.log("continued success")
+  response.send(
+    x
+  )
 }
 
 
