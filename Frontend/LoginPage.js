@@ -23,6 +23,11 @@ document.addEventListener("mousemove", (e) => {
 //async function checkLogin(user, pass) 
 
 document.getElementById("submission").onclick = async function(event) {
+
+    // This will redirect the user to the main page of the app
+    // (NEEDS VALIDATION IF LOGIN IS CORRECT OR NOT SO IT WILL ONLY LET THEM LOGIN IF THEIR USERID AND PASSWORD ARE CORRECT)
+    window.location.href = "MainPage.html";
+
     console.log("Success")
     let Data={
         uID:document.getElementById("testID"), password:document.getElementById("testPass")

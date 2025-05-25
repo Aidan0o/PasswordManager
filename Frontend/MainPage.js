@@ -119,3 +119,9 @@ document.getElementById("green2").addEventListener("click", async () => {
   selectedPasswordId = null;
   modalView2.style.display = "none";
 });
+
+// This will redirect the user to the login page of the app when they sign out
+// (MAY NEED ADDITIONAL SECURITY?)
+document.getElementById("signOutButton").addEventListener("click", () => {
+  window.location.href = "Login Page.html";
+});
