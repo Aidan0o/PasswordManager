@@ -107,6 +107,7 @@ header{
 .background{
   margin: 2%;
   width: 96%;
+  height: 90%;
   border-radius: 10px;
   background-color: #b3b3b3;
 }
