@@ -22,15 +22,12 @@ document.addEventListener("mousemove", (e) => {
 
 //async function checkLogin(user, pass) 
 
-document.getElementById("submission").onclick = async function(event) {
+document.getElementById("submission").onclick = async function(event) {//fetch and await only work in asynchronous functions    
 
-    // This will redirect the user to the main page of the app
-    // (NEEDS VALIDATION IF LOGIN IS CORRECT OR NOT SO IT WILL ONLY LET THEM LOGIN IF THEIR USERID AND PASSWORD ARE CORRECT)
-    window.location.href = "MainPage.html";
-
-    console.log("Success")
+    //console.log("Success")
     let Data={
-        uID:document.getElementById("testID"), password:document.getElementById("testPass")
+        uID:document.getElementById("testID"), password:document.getElementById("testPass")//allows the data that is returned to be sourced directly from the HTML
+        //puts the data into a form where it can be combined with Json data to alter what is called
     }
     const response=await fetch("/getTestData", {
         method:"POST",
@@ -40,5 +37,11 @@ document.getElementById("submission").onclick = async function(event) {
         }
     });
     const data = await response.json();//this is where true or false is returned
-    console.log(data);
+    //console.log(data);
+    if(data==true){
+        window.location.href = "MainPage.html"; // This will redirect the user to the main page of the app
+    }
+    else{
+        alert("Invalid login, please try again");
+    }
 };

@@ -159,11 +159,11 @@ function verifyUser(name, password) {
   return false;
 }
 async function ReceivePassword(request, response) {
-  console.log("still success")
+  //console.log("still success")
   let x=verifyUser(request.uID, request.password);//calls login with the data stored in the list that request should be
-  console.log("continued success")
+  //console.log("continued success")
   response.send(
-    x
+    x//allows the true or false sent from the password tester to be returned to the front end
   )
 }
 
