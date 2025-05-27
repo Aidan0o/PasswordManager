@@ -11,5 +11,5 @@ Then run ```npm run start``` to run electron on the electron folder - make sure 
 
 ## Example Login Details
 
-Username: Alice
+Username: Alice \
 Password: mypassword123
