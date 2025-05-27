@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       row.style.alignItems = "center";
       row.style.padding = "8px";
       row.style.borderBottom = "1px solid #ccc";
+      row.style.color = "white";
 
       row.innerHTML = `
         <div>${entry.Title || "N/A"}</div>

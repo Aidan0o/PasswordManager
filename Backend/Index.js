@@ -100,10 +100,9 @@ app.delete("/delete-password/:id", (req, res) => {
 
 
 
+const dbPath = path.join(__dirname, 'passwords.db');
 
-
-
-const dbPath = "C:\\Users\\willt\\OneDrive\\Documents\\GitHub\\PasswordManager\\Backend\\passwords.db";
+// const dbPath = "C:\\Users\\willt\\OneDrive\\Documents\\GitHub\\PasswordManager\\Backend\\passwords.db";
 // const dbPath = "C:\\Users\\aidan\\Documents\\GitHub\\PasswordManager\\Backend\\passwords.db";
 
 // Connect to SQLite database
