@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   try {
     const response = await fetch("http://localhost:3000/passwords");
     const passwords = await response.json();
-
+    console.log("Fetched passwords:", passwords)
     passwords.forEach(entry => {
       const row = document.createElement("div");
       row.className = "password-row";

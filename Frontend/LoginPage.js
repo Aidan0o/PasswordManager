@@ -22,26 +22,23 @@ document.addEventListener("mousemove", (e) => {
 
 //async function checkLogin(user, pass) 
 
-document.getElementById("submission").onclick = async function(event) {//fetch and await only work in asynchronous functions    
+document.getElementById("submission").onclick = async function(event) {
+    const uID = document.getElementById("testID").value;
+    const password = document.getElementById("testPass").value;
 
-    //console.log("Success")
-    let Data={
-        uID:document.getElementById("testID"), password:document.getElementById("testPass")//allows the data that is returned to be sourced directly from the HTML
-        //puts the data into a form where it can be combined with Json data to alter what is called
-    }
-    const response=await fetch("/getTestData", {
-        method:"POST",
-        body:JSON.stringify(Data),
-        headers:{
-            "Content-Type":"application/json"
-        }
+    const response = await fetch("http://localhost:3000/getTestData", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ uID, password })
     });
-    const data = await response.json();//this is where true or false is returned
-    //console.log(data);
-    if(data==true){
-        window.location.href = "MainPage.html"; // This will redirect the user to the main page of the app
-    }
-    else{
+
+    const data = await response.json();
+    console.log("Login response:", data); // for debugging
+
+    if (data.ToF === true) {
+        window.location.href = "MainPage.html";
+    } else {
         alert("Invalid login, please try again");
     }
 };
+

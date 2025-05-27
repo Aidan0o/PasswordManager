@@ -9,6 +9,7 @@ const app = express();
 
 const IV_LEN = 16; //set our IV length
 // Serve static files from the Frontend folder (outside of /Backend)
+app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'Frontend')));
 
 // Optional: Serve MainPage.html at root
@@ -22,23 +23,24 @@ app.listen(3000, () => {
 });
 
 
-async function getData(req, res) {
-  db.all(`SELECT * FROM EncryptedData WHERE PSRD_ENCR IS NOT NULL` , [], (err, rows) => {
+function getData(req, res) {
+  db.all(`SELECT * FROM EncryptedData WHERE PSRD_ENCR IS NOT NULL`, [], (err, rows) => {
     if (err) {
       console.error("Database error:", err.message);
       return res.status(500).json({ error: "Database error" });
-      
     }
-    rows.forEach((obj) => { //will go through every object in rows 
-      const encPass = obj.PSRD_ENCR; 
-      const decPass = decrypt(encPass); //temp until encryption put in/test if works
-      obj.PSRD_ENCR = decPass //sets the password to the decrypted version
+
+    rows.forEach((obj) => {
+      const encPass = obj.PSRD_ENCR;
+      const decPass = decrypt(encPass);
+      obj.PSRD_ENCR = decPass;
     });
-    const decryptedRows = JSON.stringify(rows) //turns rows back into JSON (one long string)
-    res.json(decryptedRows); // Send all password entries to frontend
-    console.log(decryptedRows);
+
+    res.json(rows); //ChatGpt used to fix this line
+    console.log("Sending decrypted data:", JSON.stringify(rows));
   });
 }
+
 
 function encrypt(originalText) {
   const algorithm = 'aes-192-cbc' //algorithm used to encrypt the string
@@ -101,8 +103,8 @@ app.delete("/delete-password/:id", (req, res) => {
 
 
 
-// const dbPath = "C:\\Users\\willt\\OneDrive\\Documents\\GitHub\\PasswordManager\\Backend\\passwords.db";
-const dbPath = "C:\\Users\\aidan\\Documents\\GitHub\\PasswordManager\\Backend\\passwords.db";
+const dbPath = "C:\\Users\\willt\\OneDrive\\Documents\\GitHub\\PasswordManager\\Backend\\passwords.db";
+// const dbPath = "C:\\Users\\aidan\\Documents\\GitHub\\PasswordManager\\Backend\\passwords.db";
 
 // Connect to SQLite database
 const db = new sqlite3.Database(dbPath, (err) => {
@@ -143,28 +145,38 @@ function createUser(name, password) {
 
 //verify login function
 function verifyUser(name, password) {
-  console.log("function passed")
-  db.get(`SELECT * FROM Staff WHERE Name = ?`, [name], (err, row) => {
-    if (err) return console.error(err.message);
-    if (!row) return console.log('User not found');
+  return new Promise((resolve, reject) => {
+    db.get(`SELECT * FROM Staff WHERE Name = ?`, [name], (err, row) => {
+      if (err) {
+        console.error(err.message);
+        return reject(err);
+      }
+      if (!row) {
+        console.log('User not found');
+        return resolve(false);
+      }
 
-    const hash = hashPassword(password, row.SALT);
-    if (hash === row.PSRD_HASH) {
-      console.log('Password is correct');
-      return true;
-    } else {
-      console.log('Invalid password');
-    }
+      const hash = hashPassword(password, row.SALT);
+      if (hash === row.PSRD_HASH) {
+        console.log('Password is correct');
+        return resolve(true);
+      } else {
+        console.log('Invalid password');
+        return resolve(false);
+      }
+    });
   });
-  return false;
 }
+
 async function ReceivePassword(request, response) {
-  //console.log("still success")
-  let x=verifyUser(request.uID, request.password);//calls login with the data stored in the list that request should be
-  //console.log("continued success")
-  response.send(
-    x//allows the true or false sent from the password tester to be returned to the front end
-  )
+  try {
+    const x = await verifyUser(request.body.uID, request.body.password);
+    let passJson = { ToF: x };
+    response.send(passJson);
+  } catch (err) {
+    console.error("Login error:", err);
+    response.status(500).json({ error: "Internal server error" });
+  }
 }
 
 
